@@ -1,0 +1,43 @@
+<%- include("partials/header.ejs") %>
+  <header>
+    <img
+      class="logo"
+      width="40"
+      height="32"
+      src="images/calendar-check.svg"
+      alt="check mark"
+    />
+    <h1>My To-Do List</h1>
+    <div class="links">
+      <a href="/">Daily Tasks</a>
+      <a href="/work">Work</a>
+      <a href="/school" id="selected">School</a>
+    </div>
+  </header>
+  <div class="tasks">
+    <div class="task-type"><h2>School Tasks</h2></div>
+      <div class="task-list">
+        <% for( let index = 0; index < tasks.length; index++ ) { %>
+          <div class="task">
+            <form action="done-school"  method="POST" class="done">
+              <input type="checkbox" name="check" value="<%= tasks[index]._id %>" onchange="this.form.submit()" <% if (tasks[index].done) {%>checked<%}%>/>
+              <label for="task<%=index%>">Task <%= (index+1) %>: <%= tasks[index].name%></label>
+            </form>
+            <form action="delete-school" method="POST" class="delete">
+              <button type="submit" name="mybtn" value="<%= tasks[index]._id %>">
+                <img src="images/trash.png" alt="delete" height="30" width="30" />
+              </button>
+            </form>
+          </div>
+          <hr>
+  
+        <% } %>
+      <form action="/add-school" method="POST" class="add">
+        <input type="text" name="toadd" required />
+        <button type="submit">
+          <img src="images/plus.png" height="30" width="30" alt="Add task" />
+        </button>
+      </form>
+    </div>
+  </div>
+  <%- include("partials/footer.ejs") %>
